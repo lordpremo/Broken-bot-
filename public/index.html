@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>BROKEN LORD Hosting</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { background:#050011; color:white; font-family:Arial, sans-serif; padding:20px; }
+    .container { max-width:480px; margin:0 auto; }
+    .big-icon {
+      width:130px;
+      height:130px;
+      display:block;
+      margin:10px auto 20px auto;
+      border-radius:16px;
+      box-shadow:0 0 25px rgba(140,0,255,0.7);
+    }
+    h2 { text-align:center; margin-bottom:5px; }
+    p.sub { text-align:center; opacity:.8; font-size:13px; margin-bottom:20px; }
+    input, textarea {
+      width:100%; padding:10px; margin-top:10px;
+      border-radius:8px; border:none;
+      background:#14002b; color:white; font-size:14px;
+    }
+    textarea { min-height:180px; font-family:monospace; }
+    button {
+      width:100%; padding:12px; margin-top:15px;
+      background:#8b3dff; color:white; border:none;
+      border-radius:8px; font-weight:bold; cursor:pointer;
+      box-shadow:0 0 15px rgba(139,61,255,0.7);
+    }
+    button:hover { background:#a45bff; }
+    .result { margin-top:20px; word-break:break-all; font-size:13px; }
+    .result a { color:#7fe3ff; text-decoration:none; }
+    .top-links { text-align:center; margin-bottom:10px; font-size:13px; }
+    .top-links a { color:#7fe3ff; text-decoration:none; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="top-links">
+    <a href="/dashboard.html">Open Dashboard</a>
+  </div>
+
+  <!-- ICON KUBWA JUU YA SEHEMU YA KUTENGENEZA -->
+  <img src="/delete.png" class="big-icon" alt="BROKEN LORD Icon">
+
+  <h2>BROKEN LORD HTML Hosting</h2>
+  <p class="sub">
+    Weka <b>jina la site</b> na <b>HTML yako</b>, utapewa link instantly.
+  </p>
+
+  <form id="form">
+    <input type="text" name="name" placeholder="mfano: my-portfolio" required>
+    <textarea name="html" placeholder="&lt;!DOCTYPE html&gt; ... HTML yako hapa ..." required></textarea>
+    <button type="submit">Publish Website</button>
+  </form>
+
+  <div class="result" id="result"></div>
+
+</div>
+
+<script>
+document.getElementById("form").onsubmit = async (e) => {
+  e.preventDefault();
+  const form = new FormData(e.target);
+
+  const res = await fetch("/upload", {
+    method: "POST",
+    body: form
+  });
+
+  const data = await res.json();
+
+  if (data.error) {
+    document.getElementById("result").textContent = "Error: " + data.error;
+  } else {
+    document.getElementById("result").innerHTML =
+      `<b>Website yako iko live:</b><br><a href="${data.url}" target="_blank">${data.url}</a>`;
+  }
+};
+</script>
+
+</body>
+                                              </html>
